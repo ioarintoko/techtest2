@@ -33,7 +33,7 @@ type User struct {
 	LastName   string    `json:"lastname"`
 	Phone      string    `json:"phone"`
 	Address    string    `json:"address"`
-	Pin        string    `json:"pin, omitempty"`
+	Pin        string    `json:"pin"`
 	CreateDate time.Time `json:"createdate"`
 	ModifyDate time.Time `json:"modifydate"`
 }
@@ -109,10 +109,22 @@ func (u *User) Update(db *sql.DB, datauser map[string]interface{}) (*UserUpdateR
 	// Return updated user data
 	updatedUser := &UserUpdateResponse{
 		IDUser:     u.IDUser,
-		FirstName:  datauser["FirstName"].(string),
-		LastName:   datauser["LastName"].(string),
-		Address:    datauser["Address"].(string),
+		FirstName:  u.FirstName, // Gunakan nilai lama jika tidak diperbarui
+		LastName:   u.LastName,
+		Address:    u.Address,
 		ModifyDate: now,
+	}
+
+	if val, ok := datauser["FirstName"]; ok {
+		updatedUser.FirstName = val.(string)
+	}
+
+	if val, ok := datauser["LastName"]; ok {
+		updatedUser.LastName = val.(string)
+	}
+
+	if val, ok := datauser["Address"]; ok {
+		updatedUser.Address = val.(string)
 	}
 
 	return updatedUser, nil

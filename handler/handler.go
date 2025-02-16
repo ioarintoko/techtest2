@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	users "techtest2/handler/Users"
 	"techtest2/handler/authentications"
+	"techtest2/handler/transactions"
 
 	"fmt"
 	"net/http"
@@ -17,10 +18,14 @@ func RegisDB(db *sql.DB) {
 }
 
 const (
-	login    = "login"
-	logout   = "logout"
-	profile  = "profile"
-	register = "register"
+	login       = "login"
+	logout      = "logout"
+	profile     = "profile"
+	register    = "register"
+	pay         = "pay"
+	topup       = "topup"
+	transfer    = "transfer"
+	transaction = "transaction"
 )
 
 func API(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +54,17 @@ func API(w http.ResponseWriter, r *http.Request) {
 	case profile:
 		users.Users(DB, w, r)
 
+	case pay:
+		transactions.Transactions(DB, w, r)
+
+	case topup:
+		transactions.Transactions(DB, w, r)
+
+	case transfer:
+		transactions.Transactions(DB, w, r)
+
+	case transaction:
+		transactions.Transactions(DB, w, r)
 	default:
 		fmt.Println("Wrong Path")
 

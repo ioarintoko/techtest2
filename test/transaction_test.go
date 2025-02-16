@@ -51,7 +51,7 @@ func TestTransaction(t *testing.T) {
 		defer db.Close()
 
 		dataUpdate := map[string]interface{}{
-			"status": "Success",
+			"Status": "Success",
 		}
 
 		_, err := datauser[0].Update(db, dataUpdate)
