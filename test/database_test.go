@@ -69,4 +69,19 @@ func TestDatabaseMysql(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
+
+	t.Run("Create Table Transaction", func(t *testing.T) {
+		db, err := lib.ConnectMySql(database)
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer db.Close()
+
+		err = lib.CreateTable(db, model.TableTransaction)
+		if err != nil {
+			t.Fatal(err)
+		}
+	})
 }
